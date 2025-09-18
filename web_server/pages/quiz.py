@@ -6,8 +6,6 @@ import requests
 
 def transform_response(response):
     return f""""{str(response)}"""
-
-
 # ---------------------- PAGE CONFIG ----------------------
 im = Image.open(r"Find_yourself\web_server\logo-round.png")
 st.set_page_config(

@@ -2,7 +2,7 @@
 import streamlit as st
 from PIL import Image
 # ---------------------- PAGE CONFIG ----------------------
-im = Image.open(r"C:\Users\klyme\Desktop\projj\Find_yourself\web_server\logo-round.png")
+im = Image.open(r"Find_yourself\web_server\logo-round.png")
 st.set_page_config(
     page_title="Find Yourself",
     page_icon=im,

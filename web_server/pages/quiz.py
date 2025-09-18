@@ -89,11 +89,11 @@ if center_button:
         payload={"prompt":f'{q_a}'}
         model_response=requests.post("https://19a838d5d3ac.ngrok-free.app/generate", json=payload)
 
-        if model_response.status_code == 200:
-            print(model_response.json()['response'])
+        if profile.status_code == 200:
+            result = profile.json()['response']
+            st.session_state["profile_result"] = result
         else:
-            print(NotImplementedError)
-
+            placeholder.error("Error")
         placeholder.success("Thank you for your answers!", icon="✅")
         st.switch_page("pages/profile.py")
 st.markdown("""

@@ -9,7 +9,7 @@ def transform_response(response):
 
 
 # ---------------------- PAGE CONFIG ----------------------
-im = Image.open("logo-round.png")
+im = Image.open(r"C:\Users\klyme\Desktop\projj\Find_yourself\web_server\logo-round.png")
 st.set_page_config(
     page_title="Find Yourself",
     page_icon=im,
@@ -74,7 +74,7 @@ if center_button:
         submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
         pailor = {"prompt":f"{submitted_answers}"}
         response = requests.post(
-            "https://19a838d5d3ac.ngrok-free.app/check_data",
+            "https://cb74336863fb.ngrok-free.app/check_data",
             json=pailor
         )    # copies the answers to work with (dict. format)
 
@@ -87,12 +87,13 @@ if center_button:
         q_a=transform_response(q_a)
 
         payload={"prompt":f'{q_a}'}
-        model_response=requests.post("https://19a838d5d3ac.ngrok-free.app/generate", json=payload)
+        profile=requests.post("https://cb74336863fb.ngrok-free.app/generate", json=payload)
 
-        if model_response.status_code == 200:
-            print(model_response.json()['response'])
+        if profile.status_code == 200:
+            result = profile.json()['response']
+            st.session_state["profile_result"] = result
         else:
-            print(NotImplementedError)
+            placeholder.error("Error")
 
         placeholder.success("Thank you for your answers!", icon="✅")
         st.switch_page("pages/profile.py")

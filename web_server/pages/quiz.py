@@ -17,7 +17,6 @@ st.set_page_config(
 )
 # ---------------------- QUIZ DATA ----------------------
 quiz = [
-    {"question": " What is your Gender?", "options": ["Male", "Female"]},
     {"question": " What is more related to you?", "options": ["work with nature","work with people","work with technics","work with art","work with symbols"]},
     {"question": " Do you feel comfortable working in team?", "options": ["Yes, I love communication","Mostly, but sometimes alone","Sometimes, It depends","Not Really, but would like to get some help","No, I’d rather do it alone"]},
     {"question": " Do you enjoy solving mathematical and computer problems?", "options": ["Yes, I do","Mostly, but not good with computers","Sometimes, It depends","Not Really, but like technologies","No, it’s not for me"]},
@@ -70,20 +69,16 @@ if center_button:
     if any(v is None for v in st.session_state.answers.values()):
         placeholder.warning("Please, answer all the questions!", icon="❌")
     else:
-
         submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
         pailor = {"prompt":f"{submitted_answers}"}
         response = requests.post(
             "https://cb74336863fb.ngrok-free.app/check_data",
             json=pailor
-        )    # copies the answers to work with (dict. format)
-
+        )
         if response.status_code == 200:
-            q_a=response.json()['response']
-            
+            q_a=response.json()['response']  
         else:
             print('Error')
-
         q_a=transform_response(q_a)
 
         payload={"prompt":f'{q_a}'}
@@ -147,6 +142,5 @@ footer {visibility: hidden;}
 }
 </style>
 """, unsafe_allow_html=True)
-
 
 print(submitted_answers)

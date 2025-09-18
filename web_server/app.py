@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-
 # ---------------- NAVIGATION ----------------
 pages = {
     "Main": [
@@ -8,10 +7,8 @@ pages = {
         st.Page("pages/profile.py", title="Profile"),
     ]
 }
-
 pg = st.navigation(pages, position="top")
 pg.run()
-
 # ---------------- PAGE CONFIG ----------------
 im = Image.open(r"Find_yourself\web_server\logo-round.png")
 st.set_page_config(

@@ -94,10 +94,6 @@ if center_button:
             st.session_state["profile_result"] = result
         else:
             placeholder.error("Error")
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d30d411eb038d0c27a6a1f0cb024e9a86b55547
         placeholder.success("Thank you for your answers!", icon="✅")
         st.switch_page("pages/profile.py")
 st.markdown("""

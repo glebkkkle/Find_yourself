@@ -5,9 +5,9 @@ import time
 import requests
 
 def transform_response(response):
-    return f""""{str(response)}"""
+    return response[1:-1]
 # ---------------------- PAGE CONFIG ----------------------
-im = Image.open(r"Find_yourself\web_server\logo-round.png")
+im = Image.open(r"web_server\logo-round.png")
 st.set_page_config(
     page_title="Find Yourself",
     page_icon=im,
@@ -15,7 +15,6 @@ st.set_page_config(
 )
 # ---------------------- QUIZ DATA ----------------------
 quiz = [
-    {"question": " What is more related to you?", "options": ["work with nature","work with people","work with technics","work with art","work with symbols"]},
     {"question": " Do you feel comfortable working in team?", "options": ["Yes, I love communication","Mostly, but sometimes alone","Sometimes, It depends","Not Really, but would like to get some help","No, I’d rather do it alone"]},
     {"question": " Do you enjoy solving mathematical and computer problems?", "options": ["Yes, I do","Mostly, but not good with computers","Sometimes, It depends","Not Really, but like technologies","No, it’s not for me"]},
     {"question": " Are you comfortable adapting quickly when things don't go as planned?", "options": ["Yes, I adapt fast and calm","Mostly, but stress affects me","Sometimes, It depends","Not Really, but I good manage stress","No, I prefer stable and predictable situation"]},
@@ -29,12 +28,13 @@ quiz = [
 ]
 # ---------------------- QUIZ LOGIC ---------------------- 
 total_questions = len(quiz) # Initialization of cycle 
-if "answers" not in st.session_state: 
+if "answers" not in st.session_state or set(st.session_state.answers.keys()) != {q["question"] for q in quiz}:
     st.session_state.answers = {q["question"]: None for q in quiz}
 # ---------------------- PROGRESS BAR ----------------------
 progress_container = st.container()
 # ---------------------- PAGE HEADER ----------------------
 st.markdown("<h1 style='text-align: center; color: black;'>Find Yourself Quiz</h1>", unsafe_allow_html=True)
+
 # ---------------------- SHOW QUIZ ---------------------- 
 for i, q in enumerate(quiz, start=1): 
     key = f"q{i}" 
@@ -70,17 +70,19 @@ if center_button:
         submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
         pailor = {"prompt":f"{submitted_answers}"}
         response = requests.post(
-            "https://cb74336863fb.ngrok-free.app/check_data",
+            "https://7665b66a014f.ngrok-free.app/check_data",
             json=pailor
         )
         if response.status_code == 200:
+
             q_a=response.json()['response']  
+
         else:
             print('Error')
         q_a=transform_response(q_a)
 
         payload={"prompt":f'{q_a}'}
-        profile=requests.post("https://cb74336863fb.ngrok-free.app/generate", json=payload)
+        profile=requests.post("https://7665b66a014f.ngrok-free.app/generate", json=payload)
 
         if profile.status_code == 200:
             result = profile.json()['response']
@@ -141,4 +143,3 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-print(submitted_answers)

@@ -10,7 +10,7 @@ pages = {
 pg = st.navigation(pages, position="top")
 pg.run()
 # ---------------- PAGE CONFIG ----------------
-im = Image.open(r"Find_yourself\web_server\logo-round.png")
+im = Image.open(r"web_server\logo-round.png")
 st.set_page_config(
     page_title="Find Yourself",
     page_icon=im,

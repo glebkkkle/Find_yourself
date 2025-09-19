@@ -80,7 +80,6 @@ class RAG():
     def __call__(self, profile):
         return self._run_query(profile)
 
-
 rag=RAG()
 
 print(rag(prof))

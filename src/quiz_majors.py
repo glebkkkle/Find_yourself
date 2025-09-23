@@ -129,14 +129,11 @@ def run_cluster_quiz():
 
     return cluster
 
-
-
-major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
+def run_major_quiz(cluster):
+    major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
                 'Business':{"Business Administration":0, 'Economics':0,  'Finance':0, 'Management':0 },
                 'Humanities':{'History':0, 'Philosophy':0, 'Linguistics':0,'International Relations':0 },
                 'STEM_engineering':{'Mechanical Engineering':0,'Electrical Engineering':0, 'Civil Engineering':0, 'Biomedical Engineering':0 }}
-
-def run_major_quiz(cluster):
     majors=major_scores[cluster]
     threhold=0.7
 
@@ -156,15 +153,6 @@ def run_major_quiz(cluster):
     return
 
 run_major_quiz('STEM_data')
-
-
-major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
-                'Business':{"Business Administration":0, 'Economics':0,  'Finance':0, 'Management':0 },
-                'Humanities':{'History':0, 'Philosophy':0, 'Linguistics':0,'International Relations':0 },
-                'STEM_engineering':{'Mechanical Engineering':0,'Electrical Engineering':0, 'Civil Engineering':0, 'Biomedical Engineering':0 }}
-
-(pick_major_question(major_scores['STEM_data'], 'STEM_data'))
-(update_major_weights('STEM_data', 0, 'Yes', 'Data Science', major_scores['STEM_data']))
 
 def run_quiz():
     

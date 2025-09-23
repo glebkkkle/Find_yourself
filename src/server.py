@@ -1,7 +1,7 @@
 from llama_cpp import Llama
 from rag import RAG
 llm=Llama(model_path="/mnt/c/Users/klyme/Downloads/gemma-3-finetune.Q8_0.gguf", n_gpu_layers=-1, n_ctx=4096, n_batch=512)
-
+initial_prompt="You are given a set of quiz answers from a person. Based on these answers, generate a coherent profile of the person that follows the structure: (1) Your Hard Skills – summarize technical strengths with explicit reference to supporting question numbers, (2) Your Soft Skills – summarize interpersonal/emotional/adaptive strengths with explicit reference to supporting question numbers, (3) Your Overall Profile – provide a friendly yet formal summary combining hard and soft skills, highlighting tendencies and weaker inclinations with reference to answers, (4) Possible Career-Study Directions – suggest broad pathways (not narrow job titles) aligned to the student’s strengths, linked to answers where possible. The tone must be friendly and formal, and all sections must clearly explain how the answers informed the conclusions.The person's answers: "
 class Model():
     def __init__(self, model_path):
         self.model=Llama(model_path=model_path, n_ctx=4096, n_gpu_layers=-1)
@@ -26,7 +26,7 @@ def home():
 def generate():
     data = request.get_json()
     prompt = data.get("prompt", "")
-
+    prompt=initial_prompt + ' ' + prompt
     output = llm(prompt, max_tokens=2048, stop=[]) 
     text = output["choices"][0]["text"]
 
@@ -35,9 +35,6 @@ def generate():
 @app.route("/check_data", methods=["POST"])
 def receive_data():
     data=request.get_json()
-    print(data)
-    print(type(data))
-
     prompt=data.get("prompt", "")
 
     return jsonify({'response' : prompt})

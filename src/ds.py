@@ -162,16 +162,30 @@ STEM_data_cluster = {
                     "question_text": "Do you enjoy cleaning and preparing datasets for analysis?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Data Science": 1.0, "Artificial Intelligence": 0.7, "Data Analytics": 0.8},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.7, "Sometimes": 0.4, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
                 },
                 {
                     "question_text": "Are you interested in building machine learning models to predict outcomes?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Data Science": 1.0, "Artificial Intelligence": 0.9},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.6, "Sometimes": 0.3, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
-                }
+                }, 
+                {
+                "question_text": "Do you enjoy working with programming languages like Python or R for data tasks?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Data Science": 1.0, "Artificial Intelligence": 0.6, "Data Analytics": 0.7},
+                "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.1, "No": -.2},
+                "seen": False
+            },
+            {
+                "question_text": "Do you like exploring large datasets to find meaningful insights?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Data Science": 1.0, "Data Analytics": 0.9},
+                "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.1, "No": -.2},
+                "seen": False
+            }
             ]
         },
         "Artificial Intelligence": {
@@ -184,15 +198,29 @@ STEM_data_cluster = {
                     "question_text": "Do you enjoy working on neural networks and deep learning?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Artificial Intelligence": 1.0, "Data Science": 0.7},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.6, "Sometimes": 0.3, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
                 },
                 {
                     "question_text": "Do you like experimenting with AI projects like chatbots or autonomous agents?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Artificial Intelligence": 1.0},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.7, "Sometimes": 0.4, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
+                }, 
+                {
+                "question_text": "Are you fascinated by the idea of machines making intelligent decisions?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Artificial Intelligence": 1.0, "Data Science": 0.6},
+                "answer_weights": {"Yes":1.0, "Mostly":0.6, "Sometimes":0.3, "Not really":-0.1, "No":-0.2},
+                "seen": False
+                },
+                {
+                "question_text": "Do you want to work on computer vision or natural language processing projects?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Artificial Intelligence": 1.0, "Data Science": 0.7},
+                "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
+                "seen": False
                 }
             ]
         },
@@ -206,16 +234,30 @@ STEM_data_cluster = {
                     "question_text": "Do you enjoy working with financial datasets and ledgers?",
                     "cluster_weights": {"STEM_data": 0.8},
                     "major_weights": {"Accounting": 1.0},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.7, "Sometimes": 0.4, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
                 },
                 {
                     "question_text": "Are you comfortable preparing reports and analyzing business metrics?",
                     "cluster_weights": {"STEM_data": 0.8},
                     "major_weights": {"Accounting": 1.0},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.6, "Sometimes": 0.3, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
-                }
+                }, 
+                {
+                "question_text": "Do you find financial problem-solving and auditing interesting?",
+                "cluster_weights": {"STEM_data": 0.8, "Business": 0.5},
+                "major_weights": {"Accounting": 1.0, "Data Analytics": 0.5},
+                "answer_weights": {"Yes":1.0, "Mostly":0.6, "Sometimes":0.3, "Not really":-0.1, "No":-0.2},
+                "seen": False
+                },
+                {
+                "question_text": "Would you enjoy ensuring accuracy in financial statements?",
+                "cluster_weights": {"STEM_data": 0.8, "Business": 0.6},
+                "major_weights": {"Accounting": 1.0},
+                "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
+                "seen": False
+                }   
             ]
         },
         "Data Analytics": {
@@ -228,16 +270,30 @@ STEM_data_cluster = {
                     "question_text": "Do you enjoy building dashboards and visualizing data trends?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Data Analytics": 1.0, "Data Science": 0.7},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.7, "Sometimes": 0.4, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -.5},
                     "seen": False
                 },
                 {
                     "question_text": "Are you interested in making business decisions based on data insights?",
                     "cluster_weights": {"STEM_data": 1.0},
                     "major_weights": {"Data Analytics": 1.0, "Accounting": 0.5},
-                    "answer_weights": {"Yes": 1.0, "Mostly": 0.7, "Sometimes": 0.4, "Not really": 0.1, "No": 0.0},
+                    "answer_weights": {"Yes": .8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -0.5},
                     "seen": False
-                }
+                }, 
+                {
+                "question_text": "Do you like finding patterns in business data to improve efficiency?",
+                "cluster_weights": {"STEM_data": 1.0, "Business": 0.6},
+                "major_weights": {"Data Analytics": 1.0, "Accounting": 0.5},
+                "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
+                "seen": False
+            },
+            {
+                "question_text": "Do you enjoy translating data into insights that managers can use?",
+                "cluster_weights": {"STEM_data": 1.0, "Business": 0.5},
+                "major_weights": {"Data Analytics": 1.0},
+                "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
+                "seen": False
+            }
             ]
         }
     }}
@@ -441,9 +497,8 @@ Business_cluster = {
     "seen": False
 }
     ],
-    "majors": [
-        {
-            "major_name": "Business Administration",
+    'majors' : {
+        "Business Administration": {
             "major_metadata": {
                 "description": "Focuses on managing organizations, leadership, operations, and decision-making in business contexts.",
                 "filters": ["management", "leadership", "strategy", "operations", "communication"]
@@ -453,20 +508,34 @@ Business_cluster = {
                     "question_text": "Do you enjoy organizing processes and optimizing efficiency?",
                     "cluster_weights": {"Business": 1.0},
                     "major_weights": {"Business Administration": 1.0, "Management": 0.9},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Are you comfortable making big decisions that affect a group or company?",
                     "cluster_weights": {"Business": 1.0},
                     "major_weights": {"Business Administration": 1.0, "Management": 0.8},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
-                }
+                },
+                {
+                    "question_text": "Do you enjoy coordinating people and resources to achieve organizational goals?",
+                    "cluster_weights": {"Business": 1.0},
+                    "major_weights": {"Business Administration": 1.0, "Management": 0.9},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
+            },
+            {
+                "question_text": "Are you interested in managing budgets and financial resources effectively?",
+                "cluster_weights": {"Business": 1.0},
+                "major_weights": {"Finance": 1.0, "Business Administration": 0.8, "Management": 0.7},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                "seen": False
+            }
+
             ]
         },
-        {
-            "major_name": "Economics",
+        "Economics": {
             "major_metadata": {
                 "description": "Focuses on market behavior, economic theory, and data-driven decision-making in societies and businesses.",
                 "filters": ["economics", "markets", "policy", "analysis", "data"]
@@ -476,20 +545,33 @@ Business_cluster = {
                     "question_text": "Do you enjoy studying how supply and demand affect prices?",
                     "cluster_weights": {"Business": 1.0},
                     "major_weights": {"Economics": 1.0, "Finance": 0.8},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to research economic policies and their social impacts?",
                     "cluster_weights": {"Business": 1.0},
-                    "major_weights": {"Economics": 1.0, "Political Science": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "major_weights": {"Economics": 1.0},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you like studying trends, markets, and the impact of policies on society?",
+                    "cluster_weights": {"Business": 1.0},
+                    "major_weights": {"Economics": 1.0, "Finance": 0.8},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you enjoy working with models and data to explain human behavior in markets?",
+                    "cluster_weights": {"Business": 1.0},
+                    "major_weights": {"Economics": 1.0},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
                 }
             ]
         },
-        {
-            "major_name": "Finance",
+        "Finance": {
             "major_metadata": {
                 "description": "Focuses on investment, corporate finance, and financial markets to optimize resource allocation.",
                 "filters": ["finance", "markets", "investment", "risk analysis", "data"]
@@ -498,21 +580,34 @@ Business_cluster = {
                 {
                     "question_text": "Do you enjoy analyzing investment risks and returns?",
                     "cluster_weights": {"Business": 1.0},
-                    "major_weights": {"Finance": 1.0, "Economics": 0.6, "Accounting": 0.8},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "major_weights": {"Finance": 1.0, "Economics": 0.6},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to manage portfolios or corporate budgets?",
                     "cluster_weights": {"Business": 1.0},
-                    "major_weights": {"Finance": 1.0, "Accounting": 0.7},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "major_weights": {"Finance": 1.0},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you find it exciting to analyze investments and financial risks?",
+                    "cluster_weights": {"Business": 1.0},
+                    "major_weights": {"Finance": 1.0, "Economics": 0.8},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you enjoy helping organizations or individuals manage their money effectively?",
+                    "cluster_weights": {"Business": 1.0},
+                    "major_weights": {"Finance": 1.0, "Business Administration": 0.7},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
                 }
             ]
         },
-        {
-            "major_name": "Management",
+        "Management": {
             "major_metadata": {
                 "description": "Focuses on leadership, organizational behavior, and decision-making in teams and companies.",
                 "filters": ["leadership", "management", "organization", "strategy", "communication"]
@@ -522,20 +617,34 @@ Business_cluster = {
                     "question_text": "Do you enjoy motivating others and resolving conflicts in groups?",
                     "cluster_weights": {"Business": 1.0},
                     "major_weights": {"Management": 1.0, "Business Administration": 0.8},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to focus on improving teamwork and collaboration in organizations?",
                     "cluster_weights": {"Business": 1.0},
                     "major_weights": {"Management": 1.0, "Business Administration": 0.8},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
-                }
+                }, 
+
+                {
+                        "question_text": "Do you like motivating and guiding people toward shared goals?",
+                        "cluster_weights": {"Business": 1.0},
+                        "major_weights": {"Management": 1.0, "Business Administration": 0.8},
+                        "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                        "seen": False
+                    },
+                    {
+                        "question_text": "Would you enjoy taking responsibility for planning and leading a team?",
+                        "cluster_weights": {"Business": 1.0},
+                        "major_weights": {"Management": 1.0, "Business Administration": 0.9},
+                        "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                        "seen": False
+                    }
             ]
         }
-    ]
-}
+    }}
 
 Humanities_cluster = {
     "cluster_name": "Humanities",
@@ -721,55 +830,83 @@ Humanities_cluster = {
     "seen": False
 }
     ],
-    "majors": [
-        {
-            "major_name": "History",
-            "major_metadata": {
-                "description": "Focuses on understanding past events, civilizations, and their impact on society.",
+    "majors":{
+        "History":{
+        "major_metadata": {
+        "description": "Focuses on understanding past events, civilizations, and their impact on society.",
                 "filters": ["history", "culture", "society", "writing", "analysis"]
             },
-            "major_questions": [
+        "major_questions":[
                 {
                     "question_text": "Do you enjoy studying different historical periods and civilizations?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"History": 1.0, "International Relations": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to research how the past influences current society?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"History": 1.0, "Philosophy": 0.5},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
-                }
-            ]
-        },
-        {
-            "major_name": "Philosophy",
+                }, 
+                {
+                "question_text": "Do you like analyzing primary sources such as letters, documents, or artifacts?",
+                "cluster_weights": {"Humanities": 1.0},
+                "major_weights": {"History": 1.0, "Philosophy": 0.5},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                "seen": False
+            },
+            {
+                "question_text": "Would you enjoy comparing how different cultures developed over time?",
+                "cluster_weights": {"Humanities": 1.0},
+                "major_weights": {"History": 1.0, "International Relations": 0.7},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                "seen": False
+            }
+                
+                ]
+            
+        }, 
+
+        'Philosophy':{
             "major_metadata": {
-                "description": "Focuses on critical thinking, ethics, reasoning, and the study of knowledge and existence.",
-                "filters": ["philosophy", "logic", "ethics", "writing", "critical thinking"]
+            "description": "Focuses on critical thinking, ethics, reasoning, and the study of knowledge and existence.",
+            "filters": ["philosophy", "logic", "ethics", "writing", "critical thinking"]
             },
             "major_questions": [
                 {
                     "question_text": "Do you enjoy discussing abstract ideas such as truth, justice, or morality?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"Philosophy": 1.0, "History": 0.4},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Do you enjoy analyzing arguments and improving logical reasoning?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"Philosophy": 1.0, "Linguistics": 0.5},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you enjoy discussing big questions about existence, knowledge, or morality?",
+                    "cluster_weights": {"Humanities": 1.0},
+                    "major_weights": {"Philosophy": 1.0, "History": 0.6},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you like to evaluate different ways of reasoning and argumentation?",
+                    "cluster_weights": {"Humanities": 1.0},
+                    "major_weights": {"Philosophy": 1.0, "Linguistics": 0.6},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
                 }
             ]
-        },
-        {
-            "major_name": "Linguistics",
+        }, 
+        "Linguistics":{
             "major_metadata": {
                 "description": "Focuses on the scientific study of language, its structure, and its role in communication.",
                 "filters": ["linguistics", "language", "communication", "analysis", "culture"]
@@ -779,42 +916,70 @@ Humanities_cluster = {
                     "question_text": "Do you enjoy studying grammar, syntax, or the structure of languages?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"Linguistics": 1.0, "Philosophy": 0.4},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to explore how language shapes culture and society?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"Linguistics": 1.0, "International Relations": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
-                }
+                }, 
+                {
+                "question_text": "Do you enjoy studying how languages are structured and evolve over time?",
+                "cluster_weights": {"Humanities": 1.0},
+                "major_weights": {"Linguistics": 1.0, "History": 0.5},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                "seen": False
+            },
+            {
+                "question_text": "Would you like to analyze how language shapes thought and communication?",
+                "cluster_weights": {"Humanities": 1.0},
+                "major_weights": {"Linguistics": 1.0, "Philosophy": 0.7},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                "seen": False
+            }
             ]
-        },
-        {
-            "major_name": "International Relations",
+        }, 
+        "International Relations":{
             "major_metadata": {
-                "description": "Focuses on global politics, diplomacy, and how nations interact with each other.",
-                "filters": ["international relations", "politics", "diplomacy", "culture", "communication"]
+            "description": "Focuses on global politics, diplomacy, and how nations interact with each other.",
+            "filters": ["international relations", "politics", "diplomacy", "culture", "communication"]
             },
             "major_questions": [
                 {
                     "question_text": "Do you enjoy learning about diplomacy and how countries interact?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"International Relations": 1.0, "History": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to work with international organizations and policies?",
                     "cluster_weights": {"Humanities": 1.0},
                     "major_weights": {"International Relations": 1.0, "Political Science": 0.7},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you like studying how countries cooperate and compete with each other?",
+                    "cluster_weights": {"Humanities": 1.0},
+                    "major_weights": {"International Relations": 1.0, "Economics": 0.6},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you enjoy analyzing global issues such as conflict, diplomacy, or trade?",
+                    "cluster_weights": {"Humanities": 1.0},
+                    "major_weights": {"International Relations": 1.0, "History": 0.7},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.2},
+                    "seen": False
                 }
             ]
         }
-    ]
+
+    }
 }
 
 
@@ -1002,9 +1167,8 @@ STEM_engineering_cluster = {
 }
 
     ],
-    "majors": [
-        {
-            "major_name": "Mechanical Engineering",
+    "majors":{
+        'Mechanical Engineering':{
             "major_metadata": {
                 "description": "Focuses on designing and optimizing machines, vehicles, and mechanical systems.",
                 "filters": ["mechanical", "design", "physics", "energy", "manufacturing"]
@@ -1014,86 +1178,140 @@ STEM_engineering_cluster = {
                     "question_text": "Do you enjoy working with engines, machines, or robotics?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Mechanical Engineering": 1.0, "Electrical Engineering": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.4,"Not really":-0.2,"No":-.3}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to design and test new mechanical devices?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Mechanical Engineering": 1.0, "Biomedical Engineering": 0.5},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-.3}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you enjoy solving problems related to motion, energy, and force?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Mechanical Engineering": 1.0, "Civil Engineering": 0.5},
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-.3},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you like to work on designing vehicles, engines, or industrial equipment?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Mechanical Engineering": 1.0, "Electrical Engineering": 0.6},
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-0.3},
+                    "seen": False
                 }
             ]
         },
-        {
-            "major_name": "Electrical Engineering",
+        "Electrical Engineering":{
             "major_metadata": {
-                "description": "Focuses on circuits, electronics, power systems, and communication technologies.",
-                "filters": ["electrical", "circuits", "electronics", "signal processing", "energy"]
+            "description": "Focuses on circuits, electronics, power systems, and communication technologies.",
+            "filters": ["electrical", "circuits", "electronics", "signal processing", "energy"]
             },
+
             "major_questions": [
                 {
                     "question_text": "Do you enjoy working with electronics, circuits, or power systems?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Electrical Engineering": 1.0, "Mechanical Engineering": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-.3}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to work on renewable energy or communication technologies?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Electrical Engineering": 1.0, "Civil Engineering": 0.4},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-.3}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you enjoy working with circuits, electronics, or power systems?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Electrical Engineering": 1.0, "Mechanical Engineering": 0.5},
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-0.3},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you like to design systems involving renewable energy or communications?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Electrical Engineering": 1.0, "Biomedical Engineering": 0.6},
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-0.3},
+                    "seen": False
                 }
             ]
-        },
-        {
-            "major_name": "Civil Engineering",
+        }, 
+        "Civil Engineering":{
             "major_metadata": {
-                "description": "Focuses on designing and constructing infrastructure such as bridges, roads, and buildings.",
-                "filters": ["civil", "infrastructure", "design", "construction", "environment"]
+            "description": "Focuses on designing and constructing infrastructure such as bridges, roads, and buildings.",
+            "filters": ["civil", "infrastructure", "design", "construction", "environment"]
             },
             "major_questions": [
                 {
                     "question_text": "Do you enjoy working on construction projects or infrastructure design?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Civil Engineering": 1.0, "Mechanical Engineering": 0.5},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-0.3}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to improve urban planning or environmental sustainability through engineering?",
                     "cluster_weights": {"STEM_engineering": 1.0},
-                    "major_weights": {"Civil Engineering": 1.0, "Environmental Science": 0.7},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "major_weights": {"Civil Engineering": 1.0},
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.2,"No":-.3}, 
                     'seen':False
+                }, 
+                {
+                    "question_text": "Do you enjoy planning and designing buildings, roads, or bridges?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Civil Engineering": 1.0, "Mechanical Engineering": 0.6},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3},
+                    "seen": False
+                },
+                {
+                    "question_text": "Would you like to work on solving environmental or infrastructure challenges?",
+                    "cluster_weights": {"STEM_engineering": 1.0},
+                    "major_weights": {"Civil Engineering": 1.0, "Biomedical Engineering": 0.4},
+                    "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3},
+                    "seen": False
                 }
             ]
-        },
-        {
-            "major_name": "Biomedical Engineering",
-            "major_metadata": {
+        }, 
+        "Biomedical Engineering":{
+                        "major_metadata": {
                 "description": "Focuses on applying engineering to healthcare, including medical devices and biotechnology.",
                 "filters": ["biomedical", "healthcare", "devices", "bioengineering", "innovation"]
             },
-            "major_questions": [
+                        "major_questions": [
                 {
                     "question_text": "Do you enjoy combining biology and engineering to solve medical problems?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Biomedical Engineering": 1.0, "Data Science": 0.5},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3}, 
                     'seen':False
                 },
                 {
                     "question_text": "Would you like to design medical devices or prosthetics?",
                     "cluster_weights": {"STEM_engineering": 1.0},
                     "major_weights": {"Biomedical Engineering": 1.0, "Mechanical Engineering": 0.6},
-                    "answer_weights": {"Yes":1.0,"Mostly":0.7,"Sometimes":0.4,"Not really":0.1,"No":0.0}, 
+                    "answer_weights": {"Yes":.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3}, 
                     'seen':False
-                }
+                }, 
+                {
+                "question_text": "Do you like combining engineering with medicine to improve healthcare?",
+                "cluster_weights": {"STEM_engineering": 1.0},
+                "major_weights": {"Biomedical Engineering": 1.0, "Electrical Engineering": 0.6},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3},
+                "seen": False
+            },
+            {
+                "question_text": "Would you enjoy designing medical devices such as prosthetics or imaging equipment?",
+                "cluster_weights": {"STEM_engineering": 1.0},
+                "major_weights": {"Biomedical Engineering": 1.0, "Mechanical Engineering": 0.6},
+                "answer_weights": {"Yes":0.8,"Mostly":0.5,"Sometimes":0.3,"Not really":-0.1,"No":-.3},
+                "seen": False
+            }
             ]
         }
-    ]
+    }
 }

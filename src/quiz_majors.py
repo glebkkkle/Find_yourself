@@ -22,7 +22,6 @@ def softmax(scores, temperature=0.5):
 def pick_question(cluster_scores, alpha=None):
     dominant_cluster = max(cluster_scores, key=lambda x : cluster_scores[x])
 
-    print(dominant_cluster)
     cluster_questions_list=clusters[dominant_cluster]['cluster_questions']
     
     for question_id in range(len(cluster_questions_list)):
@@ -96,13 +95,7 @@ def update_major_weights( cluster, major_id,user_ans,  major_name, major_scores)
 
 def _format_cluster(cluster_scores):
     chosen_cluster=max(cluster_scores, key=lambda x : cluster_scores[x])    
-    majors=clusters[chosen_cluster]['majors']
-    
-    mjs=[{'name':x['major_name'], 'description':x['major_metadata']['description']} for x in majors]
-
-    return mjs
-
-
+    return chosen_cluster
 
 
 def run_cluster_quiz():
@@ -111,13 +104,7 @@ def run_cluster_quiz():
     while True:
         if any([clusters_scores[x] >= threshold for x in clusters_scores]):
             break
-
         question, opt, id, cluster_q=pick_question(clusters_scores) 
-        
-        if any([clusters_scores[x] > 0.55 for x in clusters_scores]):
-            q=pick_major_question(clusters_scores)
-            print(f'Major question:{q}')
-            
         try:
             user_ans=_get_user_answer(question, opt)
         except TypeError:
@@ -135,26 +122,34 @@ def run_major_quiz(cluster):
                 'Humanities':{'History':0, 'Philosophy':0, 'Linguistics':0,'International Relations':0 },
                 'STEM_engineering':{'Mechanical Engineering':0,'Electrical Engineering':0, 'Civil Engineering':0, 'Biomedical Engineering':0 }}
     majors=major_scores[cluster]
-    threhold=0.7
+    threhold=0.8
 
     while True:
-        print(majors)
         if any([majors[x] >=threhold for x in majors]):
-            
             break
         question, options, major_id, major_name=pick_major_question(majors, cluster)
         
         try:
-            _get_user_answer(question, options)
+            user_ans=_get_user_answer(question, options)
         except TypeError:
             break
-        majors=softmax(update_major_weights(cluster, major_id, 'Yes', major_name, majors))
-    
-    return
+        majors=softmax(update_major_weights(cluster, major_id, user_ans, major_name, majors))
 
-run_major_quiz('STEM_data')
+    return max(majors, key=lambda x : majors[x])
+
 
 def run_quiz():
-    
+    chosen_cluster=run_cluster_quiz()
 
-    return 
+    print('-------------------------------')
+    print('-------------------------------')
+    
+    major=run_major_quiz(chosen_cluster)
+
+    return major
+
+
+major=run_quiz()
+
+
+print(major)

@@ -143,13 +143,11 @@ def run_quiz():
 
     print('-------------------------------')
     print('-------------------------------')
-    
+
     major=run_major_quiz(chosen_cluster)
 
     return major
 
+cluster='STEM_data'
+major='Data Science'
 
-major=run_quiz()
-
-
-print(major)

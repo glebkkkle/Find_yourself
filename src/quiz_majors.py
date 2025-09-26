@@ -1,7 +1,10 @@
 from ds import STEM_data_cluster, Business_cluster, STEM_engineering_cluster, Humanities_cluster
 import numpy as np 
+<<<<<<< HEAD
 import requests
 
+=======
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
 
 clusters={}
 
@@ -83,8 +86,12 @@ def _get_user_answer(q, options):
     return user_input
 
 
+<<<<<<< HEAD
 
 def update_major_weights(cluster, major_id,user_ans,  major_name, major_scores):
+=======
+def update_major_weights( cluster, major_id,user_ans,  major_name, major_scores):
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
     question=clusters[cluster]['majors'][major_name]['major_questions'][major_id]
     answer_weight=question['answer_weights'][user_ans]
 
@@ -96,26 +103,40 @@ def update_major_weights(cluster, major_id,user_ans,  major_name, major_scores):
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
 def _format_cluster(cluster_scores):
     chosen_cluster=max(cluster_scores, key=lambda x : cluster_scores[x])    
     return chosen_cluster
 
+<<<<<<< HEAD
 get_user_response_url=''
 
 def run_cluster_quiz(cluster_scores):
     threshold=0.80
+=======
+
+def run_cluster_quiz():
+    threshold=0.80
+    clusters_scores={'STEM_data':0, "Business":0, "Humanities":0, "STEM_engineering":0}
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
     while True:
         if any([clusters_scores[x] >= threshold for x in clusters_scores]):
             break
         question, opt, id, cluster_q=pick_question(clusters_scores) 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
         try:
             user_ans=_get_user_answer(question, opt)
         except TypeError:
             break
         clusters_scores=softmax(update_cluster_weights(user_ans, id, cluster_q, clusters_scores))
 
+<<<<<<< HEAD
 
     cluster=_format_cluster(clusters_scores)
 
@@ -143,6 +164,13 @@ def run_cl_quiz(session_id):
     return 
 
 
+=======
+        
+    cluster=_format_cluster(clusters_scores)
+
+    return cluster
+
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
 def run_major_quiz(cluster):
     major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
                 'Business':{"Business Administration":0, 'Economics':0,  'Finance':0, 'Management':0 },
@@ -165,16 +193,26 @@ def run_major_quiz(cluster):
     return max(majors, key=lambda x : majors[x])
 
 
+<<<<<<< HEAD
 def run_quiz(cluster_scores, major_scores):
     chosen_cluster=run_cluster_quiz(cluster_scores)
 
     print('-------------------------------')
     print('-------------------------------')
     
+=======
+def run_quiz():
+    chosen_cluster=run_cluster_quiz()
+
+    print('-------------------------------')
+    print('-------------------------------')
+
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
     major=run_major_quiz(chosen_cluster)
 
     return major
 
+<<<<<<< HEAD
 dic={'user_id':'abc123'}
 
 
@@ -215,4 +253,8 @@ user_sessions = {
     }
 
 
+=======
+cluster='STEM_data'
+major='Data Science'
+>>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7
 

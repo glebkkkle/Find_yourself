@@ -1,5 +1,7 @@
 from ds import STEM_data_cluster, Business_cluster, STEM_engineering_cluster, Humanities_cluster
 import numpy as np 
+import requests
+
 
 clusters={}
 
@@ -81,7 +83,8 @@ def _get_user_answer(q, options):
     return user_input
 
 
-def update_major_weights( cluster, major_id,user_ans,  major_name, major_scores):
+
+def update_major_weights(cluster, major_id,user_ans,  major_name, major_scores):
     question=clusters[cluster]['majors'][major_name]['major_questions'][major_id]
     answer_weight=question['answer_weights'][user_ans]
 
@@ -93,28 +96,52 @@ def update_major_weights( cluster, major_id,user_ans,  major_name, major_scores)
 
 
 
+
 def _format_cluster(cluster_scores):
     chosen_cluster=max(cluster_scores, key=lambda x : cluster_scores[x])    
     return chosen_cluster
 
+get_user_response_url=''
 
-def run_cluster_quiz():
+def run_cluster_quiz(cluster_scores):
     threshold=0.80
-    clusters_scores={'STEM_data':0, "Business":0, "Humanities":0, "STEM_engineering":0}
     while True:
         if any([clusters_scores[x] >= threshold for x in clusters_scores]):
             break
         question, opt, id, cluster_q=pick_question(clusters_scores) 
+
         try:
             user_ans=_get_user_answer(question, opt)
         except TypeError:
             break
         clusters_scores=softmax(update_cluster_weights(user_ans, id, cluster_q, clusters_scores))
 
-        
+
     cluster=_format_cluster(clusters_scores)
 
+
     return cluster
+
+quiz_states={'quiz_state':'abc123', 'cluster_scores':[], 'major_scores':[], 'done':False}
+
+def run_cl_quiz(session_id):
+    if quiz_states['done']==True:
+        return 'Over'
+
+    threshold=0.8
+    cluster_scores=quiz_states[session_id]
+
+    if any([cluster_scores[x] >=threshold for x in cluster_scores]):
+        quiz_states['done']=True
+        return max(cluster_scores, key=lambda x : cluster_scores[x])
+    
+    question, opt, id, cluster_q=pick_question(cluster_scores)
+    payload={'q':question, 'o':opt}
+
+    response=requests.post(get_user_response_url, json=payload)
+
+    return 
+
 
 def run_major_quiz(cluster):
     major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
@@ -138,8 +165,8 @@ def run_major_quiz(cluster):
     return max(majors, key=lambda x : majors[x])
 
 
-def run_quiz():
-    chosen_cluster=run_cluster_quiz()
+def run_quiz(cluster_scores, major_scores):
+    chosen_cluster=run_cluster_quiz(cluster_scores)
 
     print('-------------------------------')
     print('-------------------------------')
@@ -148,8 +175,44 @@ def run_quiz():
 
     return major
 
+dic={'user_id':'abc123'}
 
-major=run_quiz()
 
 
-print(major)
+def _identify_session(payload, states):
+    session_id=payload['user_id']
+
+    cluster_scores=states['cluster_scores']
+    major_scores=states['major_scores']
+
+
+    return 
+
+def init_major_scores(cluster):
+    major_scores = {
+        'STEM_data': {'Data Science': 0, 'Artificial Intelligence': 0, 'Accounting': 0, 'Data Analytics': 0},
+        'Business': {'Business Administration': 0, 'Economics': 0, 'Finance': 0, 'Management': 0},
+        'Humanities': {'History': 0, 'Philosophy': 0, 'Linguistics': 0, 'International Relations': 0},
+        'STEM_engineering': {'Mechanical Engineering': 0, 'Electrical Engineering': 0, 'Civil Engineering': 0, 'Biomedical Engineering': 0}
+    }
+    return major_scores[cluster].copy() 
+
+
+
+user_sessions = {
+    'user_id':
+    "user123",
+    "cluster_quiz": {
+            "scores": {...},
+            "current_question": None,
+            "finished": False
+        },
+        "major_quiz": {
+            "scores": {...},
+            "current_question": None,
+            "finished": False
+        }
+    }
+
+
+

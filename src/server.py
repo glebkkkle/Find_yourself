@@ -1,6 +1,7 @@
 from llama_cpp import Llama
 from quiz_majors import pick_major_question, pick_question, update_major_weights, update_cluster_weights, softmax, init_major_scores
 
+import uuid
 
 llm=Llama(model_path="/mnt/c/Users/klyme/Downloads/gemma-3-finetune.Q8_0.gguf", n_gpu_layers=-1, n_ctx=4096, n_batch=512)
 initial_prompt="You are given a set of quiz answers from a person. Based on these answers, generate a coherent profile of the person that follows the structure: (1) Your Hard Skills – summarize technical strengths with explicit reference to supporting question numbers, (2) Your Soft Skills – summarize interpersonal/emotional/adaptive strengths with explicit reference to supporting question numbers, (3) Your Overall Profile – provide a friendly yet formal summary combining hard and soft skills, highlighting tendencies and weaker inclinations with reference to answers, (4) Possible Career-Study Directions – suggest broad pathways (not narrow job titles) aligned to the student’s strengths, linked to answers where possible. The tone must be friendly and formal, and all sections must clearly explain how the answers informed the conclusions.The person's answers: "
@@ -100,66 +101,31 @@ def find_suitable_major():
     found_major=(prompt)
     return jsonify({"response" : found_major})
 
-sessions = {
-    "abc123": { 
-        "quiz_stage": "cluster",              # "cluster" or "major" or "done"
-        "cluster_scores": {                   # scores for cluster quiz
-            "STEM_data": 0,
-            "Business": 0,
-            "Humanities": 0,
-            "STEM_engineering": 0
-        },
-        "major_scores": None,                 # initialized later when cluster quiz ends
-        "current_cluster": None,              # set when cluster quiz finishes
-        "current_question_id": None           # optional: track which question was last sent
-    }, 
-
-    'new_user123':
-    {
-        'quiz_stage':'cluster', 
-        'cluster_scores': {                   # scores for cluster quiz
-            "STEM_data": 0,
-            "Business": 0,
-            "Humanities": 0,
-            "STEM_engineering": 0
-        },
-     
-        "major_scores": None,                 # initialized later when cluster quiz ends
-        "current_cluster": None,              # set when cluster quiz finishes     
-        'current_qid':None, 
-        'current_mid':None, 
-        'current_major':None, 
-
-        
-    },  
-
-    
-    }
-
+sessions = {}
 
 @app.route("/start_cluster_quiz", methods=["POST"])
 def start_quiz():
     user_id = request.json["user_id"]
-    q, opts, qid, cluster = pick_question(sessions[user_id]["cluster_scores"])
-
-    sessions[user_id] = {
-        "quiz_stage": "cluster",
-        "cluster_scores": {"STEM_data":0, "Business":0, "Humanities":0, "STEM_engineering":0},
-        "major_scores": None,
-        "current_cluster": cluster, 
-        'current_qid':qid, 
+    sessions[user_id]={
+        'quiz_stage':'cluster', 
+        'cluster_scores':{'STEM_data':0, 'Business':0, 'Humanities':0, 'STEM_engineering':0},
+        'major_scores':None, 
         'current_major':None, 
-        'current_mid':None,
-
+        'current_mid':None, 
 
     }
+    q, opts, qid, cluster = pick_question(sessions[user_id]["cluster_scores"])
+
+    sessions[user_id]['current_cluster'] =cluster 
+    sessions[user_id]['current_qid']=qid
+
 
     return {"stage": "cluster", "question": q, "options": opts}
 
 
-def start_major_quiz(user_id, major_scores, cluster, state):
+def start_major_quiz(major_scores, cluster, state):
     q, opt, mid, major=pick_major_question(major_scores, cluster)
-
+    
     state['mid']=mid
     state['current_major']=major
     
@@ -180,8 +146,6 @@ def answer():
     if state["quiz_stage"] == "cluster":
 
         # update cluster scores...
-
-
         state["cluster_scores"] = softmax(update_cluster_weights(
             user_answer, qid, cluster, state["cluster_scores"]
         ))
@@ -191,9 +155,6 @@ def answer():
             state["current_cluster"] = max(state["cluster_scores"], key=state["cluster_scores"].get)
             state["major_scores"] = init_major_scores(state["current_cluster"])
             q, opts, new_mid, major = pick_major_question(state["major_scores"], state["current_cluster"])
-
-            print('STOPPING THE CLUSTER QUIZ, GOING FOR A MAJOR QUIZ')
-            print(state['major_scores'])
             
             state['current_mid']=new_mid
             state['current_major']=major
@@ -212,15 +173,13 @@ def answer():
         state["major_scores"] = softmax(update_major_weights(
             state["current_cluster"], mid, user_answer, major, state["major_scores"]
         ))
-        print(state['major_scores'])
+
         if any(s >= 0.65 for s in state["major_scores"].values()):
             final_major = max(state["major_scores"], key=state["major_scores"].get)
-            print('DONE')
-            print(final_major)
+
             return {"stage": "done", "result": final_major}
         else:
             q, opts, new_mid, major = pick_major_question(state["major_scores"], state["current_cluster"])
-            print(new_mid)
 
             state['current_mid']=new_mid
             state['current_major']=major

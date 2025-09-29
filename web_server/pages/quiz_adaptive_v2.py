@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from auth import save_quiz_result1
+from auth import save_quiz_result1, login_user
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -88,6 +88,10 @@ if "done" not in st.session_state:
     st.session_state.done = False
 if "result" not in st.session_state:
     st.session_state.result = None
+    
+login_result = login_user()
+if "error" not in login_result:
+    st.session_state["uid"] = login_result["localId"]
 
 def transform_response(response):
     return f""""{str(response)}"""
@@ -111,7 +115,8 @@ st.markdown(
 )
 # ------------------ FUNCTIONS ------------------
 def fetch_next_question():
-    payload = {"answers": st.session_state.answers}
+    uid = st.session_state.get("uid")
+    payload = {"answers": st.session_state.answers, "uid": uid}
     response = requests.post(API_URL, json=payload)
     if response.status_code == 200:
         data = response.json()
@@ -119,7 +124,7 @@ def fetch_next_question():
             st.session_state.done = True
             st.session_state.result = data["profile"]
             save_quiz_result1()
-            st.switch_page(r"prot\pages\profile_prototype.py")
+            st.switch_page(r"pages\profile_prototype.py")
         else:
             st.session_state.current_question = data
     else:
@@ -131,7 +136,7 @@ if st.session_state.current_question is None and not st.session_state.done:
 if not st.session_state.done:
     q = st.session_state.current_question
     if q:
-        answer = st.radio(q["question"], q["options"], key=f"q{len(st.session_state.answers)}")
+        answer = st.radio(q["q"], q["opts"], key=f"q{len(st.session_state.answers)}")
         if st.button("Answer"):
             st.session_state.answers[q["question"]] = answer
             fetch_next_question()

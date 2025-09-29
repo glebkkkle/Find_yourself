@@ -15,7 +15,6 @@ class Model():
     
 
 def output_major_suggestion(profile, major):
-    llm=Llama(model_path="/mnt/c/Users/klyme/Downloads/codellama-7b-instruct.Q4_0.gguf", n_ctx=9000, n_batch=512, n_gpu_layers=-1)
     prompt=f"""You are an expert career advisor. Your task is to generate a personalized explanation of why a suggested college major suits a specific user. 
 
     Instructions:
@@ -31,7 +30,7 @@ def output_major_suggestion(profile, major):
     Suggested Major:
     {major}
 
-    Output:"""
+    Output: """
 
     response=llm(prompt, max_tokens=2048, echo=False)
     llm.close()
@@ -188,5 +187,17 @@ def answer():
             return {"stage": "major", "question": q, "options": opts}
 
 
+
+@app.route('/suggest_major', methods=['POST'])
+def fu():
+    user_profile=request.json['profile']
+    user_major_description=request.json['major']
+    
+    model_suggestion=output_major_suggestion(user_profile, user_major_description)
+    
+    return {'text':model_suggestion}
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+

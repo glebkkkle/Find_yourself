@@ -15,7 +15,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL = ""
+API_URL = "https://f466fa0cfea6.ngrok-free.app/start_cluster_quiz"
 # ---------------------- STYLES ----------------------
 st.markdown(
     """
@@ -116,7 +116,7 @@ st.markdown(
 # ------------------ FUNCTIONS ------------------
 def fetch_next_question():
     uid = st.session_state.get("uid")
-    payload = {"answers": st.session_state.answers, "uid": uid}
+    payload = {"answers": st.session_state.answers, "user_id": uid}
     response = requests.post(API_URL, json=payload)
     if response.status_code == 200:
         data = response.json()
@@ -130,8 +130,8 @@ def fetch_next_question():
     else:
         st.error("Error!")
 
-if st.session_state.current_question is None and not st.session_state.done:
-    fetch_next_question()
+
+fetch_next_question()
 
 if not st.session_state.done:
     q = st.session_state.current_question

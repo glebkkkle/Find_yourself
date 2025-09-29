@@ -6,7 +6,7 @@ import requests
 
 #-------------------- MAIN ------------------------
 if not firebase_admin._apps:
-    cred = credentials.Certificate(r"C:\proj\prot\find-yourself-b3820-firebase-adminsdk-fbsvc-45607e0ace.json")
+    cred = credentials.Certificate(r"C:\Users\klyme\Desktop\projj\Find_yourself\hui.json")
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

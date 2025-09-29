@@ -1,23 +1,5 @@
 import streamlit as st
 from PIL import Image
-<<<<<<< HEAD
-# ---------------- NAVIGATION ----------------
-pages = {
-    "Main": [
-        st.Page("pages/quiz.py", title="Quiz"),
-        st.Page("pages/profile.py", title="Profile"),
-    ]
-}
-pg = st.navigation(pages, position="top")
-pg.run()
-# ---------------- PAGE CONFIG ----------------
-im = Image.open(r"web_server\logo-round.png")
-st.set_page_config(
-    page_title="Find Yourself",
-    page_icon=im,
-    layout="centered"
-)
-=======
 from auth import register_user, login_user
 # ---------------- STYLES ----------------
 st.markdown(
@@ -170,4 +152,3 @@ else:
         page_icon=im,
         layout="centered"
     )
->>>>>>> 350b64d2b7736334df4866b3334215762e5f2ff7

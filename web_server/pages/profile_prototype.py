@@ -42,15 +42,15 @@ st.markdown(
 st.markdown("<h1 style='text-align: center; color: black;'>Your Profile</h1>", unsafe_allow_html=True)
 st.write("Text")
 
-#if "profile_result" in st.session_state:
-#    st.write(st.session_state["profile_result"])
-#else:
-#    st.warning("No profile data available yet. Please complete the quiz.")
+if "profile_result" in st.session_state:
+   st.write(st.session_state["profile_result"])
+else:
+   st.warning("No profile data available yet. Please complete the quiz.")
 
-# if "result" in st.session_state and st.session_state.result:
-#     st.write(st.session_state.result)
-# else:
-#     st.warning("No profile data yet. Please complete the quiz.")
+if "result" in st.session_state and st.session_state.result:
+    st.write(st.session_state.result)
+else:
+    st.warning("No profile data yet. Please complete the quiz.")
 
 #st.expander("Hard Skills:", expanded=True)
 #st.expander("Soft Skills:", expanded=True)

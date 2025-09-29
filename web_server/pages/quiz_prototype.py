@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from auth import save_quiz_result
+from Find_yourself.web_server.auth import save_quiz_result
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -116,10 +116,9 @@ def do_submit():
     st.session_state.answers[question["question"]] = st.session_state[radio_key]
     submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
     save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
-    st.success("saved to cloud")
     pailor = {"prompt":f"{submitted_answers}"}
     response = requests.post(
-        "https://cb74336863fb.ngrok-free.app/check_data",
+        "https://0450e83596c2.ngrok-free.app/check_data",
         json=pailor
     )
     if response.status_code == 200:
@@ -129,14 +128,14 @@ def do_submit():
     q_a=transform_response(q_a)
 
     payload={"prompt":f'{q_a}'}
-    profile=requests.post("https://cb74336863fb.ngrok-free.app/generate", json=payload)
+    profile=requests.post("https://0450e83596c2.ngrok-free.app/generate", json=payload)
 
     if profile.status_code == 200:
         result = profile.json()['response']
         st.session_state["profile_result"] = result
+        st.session_state["go_to_profile"] = True
     else:
         placeholder.error("Error")
-    st.switch_page("prot\pages\profile_prototype.py")
 # ---------------------- PAGE CONTENT ----------------------
 st.markdown(
     """
@@ -189,3 +188,7 @@ with col2:
             st.button("Next →", use_container_width=True, on_click=go_next)
         else:
             st.button("Submit", use_container_width=True, on_click=do_submit)
+
+if st.session_state.get("go_to_profile"):
+    st.session_state.pop("go_to_profile")
+    st.switch_page("pages/profile_prototype.py")

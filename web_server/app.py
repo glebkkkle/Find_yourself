@@ -136,8 +136,9 @@ else:
 # ---------------- NAVIGATION ----------------
     pages = {
         "Main": [
-            st.Page("pages/quiz_prototype.py", title="Quiz"),
-            st.Page("pages/profile_prototype.py", title="Profile"),
+            st.Page("pages\quiz_prototype.py", title="Quiz"),
+            st.Page("pages\quiz_adaptive_v2.py", title="Premium Quiz"),
+            st.Page("pages\profile_prototype.py", title="Profile"),
         ]
     }
     pg = st.navigation(pages,position="top")

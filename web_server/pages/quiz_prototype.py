@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from Find_yourself.web_server.auth import save_quiz_result
+from web_server.auth  import save_quiz_result
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -118,7 +118,7 @@ def do_submit():
     save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
     pailor = {"prompt":f"{submitted_answers}"}
     response = requests.post(
-        "https://0450e83596c2.ngrok-free.app/check_data",
+        "https://a5c81e2c8bf6.ngrok-free.app/check_data",
         json=pailor
     )
     if response.status_code == 200:
@@ -128,7 +128,7 @@ def do_submit():
     q_a=transform_response(q_a)
 
     payload={"prompt":f'{q_a}'}
-    profile=requests.post("https://0450e83596c2.ngrok-free.app/generate", json=payload)
+    profile=requests.post("https://a5c81e2c8bf6.ngrok-free.app/generate", json=payload)
 
     if profile.status_code == 200:
         result = profile.json()['response']

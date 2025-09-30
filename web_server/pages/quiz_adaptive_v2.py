@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from auth import save_quiz_result1, login_user
+from web_server.pages.auth1  import save_quiz_result1, login_user
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -15,7 +15,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL = ""
+API_URL = "https://4a862f13764b.ngrok-free.app/start_cluster_quiz"
 # ---------------------- STYLES ----------------------
 st.markdown(
     """
@@ -80,19 +80,22 @@ st.markdown(
 # ---------------------- QUIZ DATA ----------------------
 
 # ---------------------- SESSION STATE ----------------------
-if "answers" not in st.session_state:
-    st.session_state.answers = {}
-if "current_question" not in st.session_state:
-    st.session_state.current_question = None
+if "answers1" not in st.session_state:
+    st.session_state.answers1 = None
+if "current_question1" not in st.session_state:
+    st.session_state.current_question1 = None
 if "done" not in st.session_state:
     st.session_state.done = False
 if "result" not in st.session_state:
     st.session_state.result = None
-    
+if "options" not in st.session_state:
+    st.session_state.options = {}
+
 login_result = login_user()
 if "error" not in login_result:
     st.session_state["uid"] = login_result["localId"]
 
+uid = st.session_state.get("uid")
 def transform_response(response):
     return f""""{str(response)}"""
 # ---------------------- PAGE CONTENT ----------------------
@@ -115,29 +118,48 @@ st.markdown(
 )
 # ------------------ FUNCTIONS ------------------
 def fetch_next_question():
-    uid = st.session_state.get("uid")
-    payload = {"answers": st.session_state.answers, "user_id": uid}
+    payload = {"answer": st.session_state.answers1, "user_id": 'uid'}
     response = requests.post(API_URL, json=payload)
     if response.status_code == 200:
         data = response.json()
-        if data.get("status") == "done":
+
+        if data.get("stage") == "done":
             st.session_state.done = True
             st.session_state.result = data["profile"]
             save_quiz_result1()
             st.switch_page(r"pages\profile_prototype.py")
         else:
-            st.session_state.current_question = data
+            st.session_state.current_question1 = data['question']
+            st.session_state.options=data['options']
+
     else:
         st.error("Error!")
+ 
+def answer_sub():
+    payload = {"answer": st.session_state.answers1, "user_id": 'uid'}
 
+    response = requests.post("https://4a862f13764b.ngrok-free.app/answer",json=payload)
 
-fetch_next_question()
+    return response.json()['question'], response.json()['options']
+
+if "initialized" not in st.session_state:
+    fetch_next_question()   # fetch first question only once
+    st.session_state.initialized = True
 
 if not st.session_state.done:
-    q = st.session_state.current_question
+    q = st.session_state.current_question1
+    opts = st.session_state.options
     if q:
-        answer = st.radio(q["q"], q["opts"], key=f"q{len(st.session_state.answers)}")
+        answer = st.radio(q, opts)
         if st.button("Answer"):
-            st.session_state.answers[q["question"]] = answer
-            fetch_next_question()
-            st.rerun()
+            st.session_state.answers1= answer
+            new_q, new_o=answer_sub()
+
+            print(new_q, new_o)
+
+            st.session_state.current_question1 = new_q
+            st.session_state.options = new_o
+
+
+            print(st.session_state.current_question1)
+            print(st.session_state.options)

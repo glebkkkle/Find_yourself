@@ -4,6 +4,7 @@ import streamlit as st
 from PIL import Image
 import requests
 from web_server.auth  import save_quiz_result
+import json
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -15,6 +16,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
+API_URL ="https://5dd4a21fdd04.ngrok-free.app"
 # ---------------------- STYLES ----------------------
 st.markdown(
     """
@@ -112,13 +114,44 @@ def go_prev():
     if st.session_state.current_question > 0:
         st.session_state.current_question -= 1
 
+def clean_text(text: str) -> str:
+    # Remove Markdown symbols: ###, **, and quotes
+    text = re.sub(r'###', '', text)       # remove all ###
+    text = re.sub(r'\*\*', '', text)      # remove all **
+    text = text.replace('"', '')           # remove quotes
+
+    # Strip leading/trailing spaces per line and remove empty lines
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+    # Rejoin lines with single newlines
+    return "\n".join(lines)
+
+
+
+import re
+
+def split_sections(text: str) -> dict:
+    # Use headings to split sections
+    headings = ["Your Hard Skills", "Your Soft Skills", "Your Overall Profile", "Possible Career-Study Directions"]
+    pattern = '|'.join([re.escape(h) for h in headings])
+    
+    # Split while keeping headings
+    parts = re.split(f'({pattern})', text)
+    
+    sections = {}
+    for i in range(1, len(parts), 2):
+        title = parts[i].strip()
+        content = parts[i+1].strip()
+        sections[title] = content
+    return sections
+
 def do_submit():
     st.session_state.answers[question["question"]] = st.session_state[radio_key]
     submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
     save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
     pailor = {"prompt":f"{submitted_answers}"}
     response = requests.post(
-        "https://a5c81e2c8bf6.ngrok-free.app/check_data",
+        f"{API_URL}/check_data",
         json=pailor
     )
     if response.status_code == 200:
@@ -128,12 +161,16 @@ def do_submit():
     q_a=transform_response(q_a)
 
     payload={"prompt":f'{q_a}'}
-    profile=requests.post("https://a5c81e2c8bf6.ngrok-free.app/generate", json=payload)
+    profile=requests.post(f"{API_URL}/generate", json=payload)
 
     if profile.status_code == 200:
         result = profile.json()['response']
-        st.session_state["profile_result"] = result
+        result=clean_text(result)
+        st.session_state["profile_result"] = split_sections(result)
         st.session_state["go_to_profile"] = True
+        print(type(result))
+        print(result)
+        print(st.session_state["profile_result"])
     else:
         placeholder.error("Error")
 # ---------------------- PAGE CONTENT ----------------------

@@ -207,6 +207,7 @@ def run_chatbot(prof, ad_res, q_a, query):
     system_prompt=f'You are a helpful assistant, that has access to user profile, quiz questions and answers. Use them only when neccessary to answer a particular query. Profile:{prof}. Questions and Answers:{q_a}. {query}'
     return llm(system_prompt, max_tokens=4096)['choices'][0]["text"]
 
+
 @app.route('/chat', methods=['POST'])
 def ch():
     user_id, query, prof, ad_res, qui=request.json['session_id'], request.json['query'], request.json['profile'], request.json['quiz_adap_res'], request.json['quiz']

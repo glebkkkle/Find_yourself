@@ -15,7 +15,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL = "https://5dd4a21fdd04.ngrok-free.app"
+API_URL = "https://da0c2381436f.ngrok-free.app"
 # ---------------------- SESSION STATE ----------------------
 if "answers1" not in st.session_state:
     st.session_state.answers1 = None
@@ -96,16 +96,20 @@ if "initialized" not in st.session_state:
     fetch_next_question()   # fetch first question only once
     st.session_state.initialized = True
 
+
+
+
 with adap_prof:
     if not st.session_state.done:
         q = st.session_state.current_question1
         opts = st.session_state.options
+
         if q:
             answer = st.radio(f"**{q}**", opts)
             if st.button("Answer"):
                 st.session_state.answers1= answer
                 new_q, new_o=answer_sub()
-
+                
                 st.session_state.current_question1 = new_q
                 st.session_state.options = new_o
                 st.rerun()
@@ -186,3 +190,5 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+

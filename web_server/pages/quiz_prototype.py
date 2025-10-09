@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from web_server.auth  import save_quiz_result
+# from web_server.auth  import save_quiz_result
 import json
 # ---------------------- PAGE CONFIG ----------------------
 try:
@@ -16,8 +16,9 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL ="https://5dd4a21fdd04.ngrok-free.app"
+API_URL ="https://da0c2381436f.ngrok-free.app"
 # ---------------------- STYLES ----------------------
+
 st.markdown(
     """
     <style>
@@ -148,7 +149,7 @@ def split_sections(text: str) -> dict:
 def do_submit():
     st.session_state.answers[question["question"]] = st.session_state[radio_key]
     submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
-    save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
+    # save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
     pailor = {"prompt":f"{submitted_answers}"}
     response = requests.post(
         f"{API_URL}/check_data",

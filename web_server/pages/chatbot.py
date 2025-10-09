@@ -121,7 +121,7 @@ def avatarer():
     if message['role'] == 'user':
         return user_avatar
     
-API_URL_CHAT = "https://da0c2381436f.ngrok-free.app/chat"
+API_URL_CHAT = "https://797d91197f67.ngrok-free.app/chat"
 title_row = st.container(
     horizontal=True,
     vertical_alignment="bottom",

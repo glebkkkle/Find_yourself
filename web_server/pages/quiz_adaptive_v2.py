@@ -15,7 +15,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL = "https://da0c2381436f.ngrok-free.app"
+API_URL = "https://797d91197f67.ngrok-free.app"
 # ---------------------- SESSION STATE ----------------------
 if "answers1" not in st.session_state:
     st.session_state.answers1 = None

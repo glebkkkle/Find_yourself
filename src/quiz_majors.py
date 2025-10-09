@@ -35,7 +35,7 @@ def pick_question(cluster_scores, alpha=None):
 
             return cluster_questions_list[question_id]['question_text'], lst, question_id, dominant_cluster
 
-
+    #if no questions left, return none 
     return None, None, None, None
 
 #pick major question
@@ -52,7 +52,7 @@ def pick_major_question(major_scores, cluster):
             options=clusters[cluster]['majors'][dominant_major]['major_questions'][major_id]['answer_weights']
             
             return q, options, major_id, dominant_major
-        
+
     return None, None, None, None
 
     

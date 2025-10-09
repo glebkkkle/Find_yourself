@@ -119,7 +119,7 @@ def do_submit():
     st.success("saved to cloud")
     pailor = {"prompt":f"{submitted_answers}"}
     response = requests.post(
-        "https://cb74336863fb.ngrok-free.app/check_data",
+        "https://8534a7b6b2c4.ngrok-free.app/check_data",
         json=pailor
     )
     if response.status_code == 200:
@@ -129,7 +129,7 @@ def do_submit():
     q_a=transform_response(q_a)
 
     payload={"prompt":f'{q_a}'}
-    profile=requests.post("https://cb74336863fb.ngrok-free.app/generate", json=payload)
+    profile=requests.post("https://8534a7b6b2c4.ngrok-free.app/generate", json=payload)
 
     if profile.status_code == 200:
         result = profile.json()['response']

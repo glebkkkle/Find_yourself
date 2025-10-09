@@ -14,21 +14,19 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from langgraph.prebuilt import create_react_agent
 
+
 class ChatModel:
     def __init__(self,model='mistral', temperature=0.9):
         self.llm = ChatOllama(
             model="mistral",
-            temperature=0,
+            temperature=0.1,
             # other params...
-        ).bind_tools([self.search_engine])
-        self.messages={}
+        )
+        self.store={}
 
-        # self.agent=create_react_agent(model=self.llm, tools=[self.search_engine])
+        self.agent=create_react_agent(model=self.llm, tools=[])
         
-        # res=self.agent.invoke({'messages':[{'role':'user', 'content':'who can I work as with computer science major?'}]})
-
         # print(res)
-
     def get_session_history(self, session_id: str) -> InMemoryChatMessageHistory:
         if session_id not in self.messages:
             self.messages[session_id] = InMemoryChatMessageHistory()
@@ -45,39 +43,42 @@ class ChatModel:
         self.messages[session_id] = InMemoryChatMessageHistory(messages=messages)
         return self.messages[session_id]
 
+    # @tool
+    # def search_engine(query:str) ->str:
+    #     """Search engine for searching important information in world wide web. Use only when necessary
+    #     """
 
-
+    #     s = GoogleSearchAPIWrapper()
+    #     res=s.run(query)
+    #     return f'results from Google Search:{res}' 
+    
     @tool
-    def search_engine(query:str) ->str:
-        """Search engine for searching information about specific major in World Wide Web
-        Can be used to find relevant information about a specific Major, or Documents or other questions that go beyond model's internal knowledge
-        """
-
-        s = GoogleSearchAPIWrapper()
-        res=s.run(query)
-        return f'results from Google Search:{res}' 
+    def _find_similar():
+        'does nothing for now'
+        return 
     
-
     def __call__(self, session_id, query,):
-        self.chain=RunnableWithMessageHistory(self.llm, self.get_session_history)
-
-
-
-        _=self.chain.invoke(query, config={'configurable':{'session_id':session_id}})
-        
-        print(_)
-
-
-        curr_chat_history=self.messages[session_id].messages 
-        human_msgs=[msg.content for msg in curr_chat_history if isinstance(msg, HumanMessage)] 
-        ai_msgs=[m.content for m in curr_chat_history if isinstance(m, AIMessage)]
-        
-        return human_msgs[-1], ai_msgs[-1]
+        if session_id not in self.store:
+            self.store={session_id:{'human_msgs':[], 'ai_msgs':[]}}
     
-    def _ivoke_bot(self, query, session_id):
-        llm_output=self.chain.invoke(input=query, config={'configurable': {'session':session_id}})
+        self.store[session_id]['human_msgs'].append(query)
+
+        ai_reply=self._ivoke_bot(query)
+
+        self.store[session_id]['ai_msgs'].append(ai_reply)
+
+        rep={'ai_msg':ai_reply, 'human_msg':query, 'session_id':session_id}
+
+        return rep
+    def _ivoke_bot(self, query):
+        res=self.agent.invoke({'messages':[{'role':'user', 'content':f'{query}'}]})
         
-        return llm_output 
+        ai_msgs=[]
+        for msg in res['messages']:
+            if isinstance(msg, AIMessage):
+                ai_msgs.append(msg.content)
+        
+        return ai_msgs[-1]  
 instance=ChatModel()
 
-instance('1', 'who can i work as with cs major')
+

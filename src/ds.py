@@ -185,8 +185,37 @@ STEM_data_cluster = {
                 "major_weights": {"Data Science": 1.0, "Data Analytics": 0.9},
                 "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.1, "No": -.2},
                 "seen": False
-            }
+            }, 
+            {
+            "question_text": "Do you enjoy testing and improving models using metrics and validation techniques?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Science": 1.0, "Artificial Intelligence": 0.8},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+            "seen": False
+            }, 
+            {
+                "question_text": "Would you like to work with real-world messy data (e.g., social media, sensor data, business data)?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Data Science": 1.0},
+                "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+                "seen": False
+            },
+            {
+                "question_text": "Do you enjoy creating data visualizations to communicate findings?",
+                "cluster_weights": {"STEM_data": 1.0},
+                "major_weights": {"Data Science": 1.0, "Data Analytics": 1.0},
+                "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.4, "Not really": -0.1, "No": -0.3},
+                "seen": False
+            },
+                    {
+            "question_text": "Are you interested in learning statistical methods to analyze and interpret data?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Science": 1.0, "Data Analytics": 0.8},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+            "seen": False
+        },
             ]
+            
         },
         "Artificial Intelligence": {
             "major_metadata": {
@@ -221,7 +250,28 @@ STEM_data_cluster = {
                 "major_weights": {"Artificial Intelligence": 1.0, "Data Science": 0.7},
                 "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
                 "seen": False
-                }
+                }, 
+                        {
+            "question_text": "Are you interested in applications like computer vision, natural language processing, or robotics?",
+            "cluster_weights": {"STEM_AI": 1.0},
+            "major_weights": {"Artificial Intelligence": 1.0},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.4, "Not really": -0.2, "No": -0.4},
+            "seen": False
+        }, 
+                {
+            "question_text": "Would you enjoy designing algorithms that allow machines to make decisions or predictions?",
+            "cluster_weights": {"STEM_AI": 1.0},
+            "major_weights": {"Artificial Intelligence": 1.0},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+            "seen": False
+        },
+                {
+            "question_text": "Do you find the idea of teaching machines to mimic human intelligence exciting?",
+            "cluster_weights": {"STEM_AI": 1.0},
+            "major_weights": {"Artificial Intelligence": 1.0},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.4, "Not really": -0.2, "No": -0.5},
+            "seen": False
+        },
             ]
         },
         "Accounting": {
@@ -257,7 +307,35 @@ STEM_data_cluster = {
                 "major_weights": {"Accounting": 1.0},
                 "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
                 "seen": False
-                }   
+                }   , 
+                        {
+            "question_text": "Do you enjoy working with numbers and ensuring financial records are accurate?",
+            "cluster_weights": {"Business": 1.0},
+            "major_weights": {"Accounting": 1.0, "Finance": 0.6},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.4, "Not really": -0.2, "No": -0.5},
+            "seen": False
+                },
+            {"question_text": "Would you like analyzing budgets, expenses, and revenues to help organizations make better decisions?",
+            "cluster_weights": {"Business": 1.0},
+            "major_weights": {"Accounting": 1.0, "Business Administration": 0.5},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+            "seen": False
+        },
+                {
+            "question_text": "Are you interested in learning about auditing and making sure companies follow financial regulations?",
+            "cluster_weights": {"Business": 1.0},
+            "major_weights": {"Accounting": 1.0},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.3, "Not really": -0.2, "No": -0.5},
+            "seen": False
+        },
+                {
+            "question_text": "Do you like working with spreadsheets, reports, and tools to track financial performance?",
+            "cluster_weights": {"Business": 1.0},
+            "major_weights": {"Accounting": 1.0, "Finance": 0.7},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -0.5},
+            "seen": False
+        }
+        
             ]
         },
         "Data Analytics": {
@@ -293,7 +371,35 @@ STEM_data_cluster = {
                 "major_weights": {"Data Analytics": 1.0},
                 "answer_weights": {"Yes":1.0, "Mostly":0.7, "Sometimes":0.4, "Not really":-0.1, "No":-0.2},
                 "seen": False
-            }
+            }, 
+                    {
+            "question_text": "Do you enjoy examining data trends to help businesses make informed decisions?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Analytics": 1.0, "Data Science": 0.8},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.4, "Not really": -0.2, "No": -0.5},
+            "seen": False
+        },
+                {
+            "question_text": "Would you like creating dashboards and reports to visualize key performance indicators?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Analytics": 1.0, "Business Administration": 0.5},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.2, "No": -0.4},
+            "seen": False
+        },
+                {
+            "question_text": "Are you interested in using tools like SQL, Excel, or Tableau to analyze business data?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Analytics": 1.0, "Data Science": 0.6},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.6, "Sometimes": 0.3, "Not really": -0.2, "No": -0.5},
+            "seen": False
+        },
+                {
+            "question_text": "Do you like identifying patterns and insights in data to improve strategies or operations?",
+            "cluster_weights": {"STEM_data": 1.0},
+            "major_weights": {"Data Analytics": 1.0, "Data Science": 0.7},
+            "answer_weights": {"Yes": 0.8, "Mostly": 0.5, "Sometimes": 0.3, "Not really": -0.3, "No": -0.5},
+            "seen": False
+        }
             ]
         }
     }}

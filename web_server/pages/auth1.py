@@ -22,14 +22,14 @@ def register_user(email,password):
     })
     return user.uid
 #-------------------- LOGIN ------------------------
-def login_user(email, password):
+def login_user(email=None, password=None):
     url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={API_KEY}"
     payload = {"email": email, "password": password, "returnSecureToken": True}
     response = requests.post(url, json=payload)
     return response.json()
 # ---------------- SAVE QUIZ RESULT ----------------
-def save_quiz_result(user_id, answers):
-    db.collection("users").document(user_id).collection("results").document("quiz_id").set({
+def save_quiz_result1(user_id, answers):
+    db.collection("users").document(user_id).collection("results").document("quiz_adaptive_id").set({
         "answers": answers,
         "timestamp": firestore.SERVER_TIMESTAMP
     })

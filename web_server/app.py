@@ -10,8 +10,8 @@ st.markdown(
     border-color: #805CD2 !important;
     }
     input[type="text"], input[type="password"] {
-        background-color: #d1d1d1ff !important;   /* светлый фон */
-        border: 2px solid #805CD2 !important;   /* фиолетовая рамка */
+        background-color: #ffffffff !important;
+        border: 2px solid #805CD2 !important;  
         border-radius: 8px !important;
         padding: 8px !important;
         color: #000 !important;
@@ -137,14 +137,16 @@ else:
     pages = {
         "Main": [
             st.Page("pages/quiz_prototype.py", title="Quiz"),
+            st.Page("pages/quiz_adaptive_v2.py", title="Premium Quiz"),
             st.Page("pages/profile_prototype.py", title="Profile"),
+            st.Page("pages/chatbot.py", title="ChatBot")
         ]
     }
     pg = st.navigation(pages,position="top")
     pg.run()
     # ---------------- PAGE CONFIG ----------------
     try:
-        im = Image.open(rf"Find_yourself\web_server\logo-round.png")
+        im = Image.open(rf"Find_yourself/web_server/logo-round.png")
     except Exception:
         im = None
     st.set_page_config(

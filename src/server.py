@@ -1,49 +1,11 @@
 from llama_cpp import Llama
-from quiz_majors import pick_major_question, pick_question, update_major_weights, update_cluster_weights, softmax, init_major_scores
-
-import uuid
-
+from quiz_majors import llm, run_chatbot, profile_gen_prompt,pick_major_question, pick_question, update_major_weights, update_cluster_weights, softmax, init_major_scores, output_major_suggestion
 from agent_chat import instance
-
-
-llm=Llama(model_path="/mnt/c/Users/klyme/Downloads/gemma-3-finetune.Q8_0.gguf", n_gpu_layers=-1, n_ctx=4096, n_batch=512)
-initial_prompt="You are given a set of quiz answers from a person. Based on these answers, generate a coherent profile of the person that follows the structure: (1) Your Hard Skills – summarize technical strengths with explicit reference to supporting question numbers, (2) Your Soft Skills – summarize interpersonal/emotional/adaptive strengths with explicit reference to supporting question numbers, (3) Your Overall Profile – provide a friendly yet formal summary combining hard and soft skills, highlighting tendencies and weaker inclinations with reference to answers, (4) Possible Career-Study Directions – suggest broad pathways (not narrow job titles) aligned to the student’s strengths, linked to answers where possible. The tone must be friendly and formal, and all sections must clearly explain how the answers informed the conclusions.The person's answers: "
-
-class Model():
-    def __init__(self, model_path):
-        self.model=Llama(model_path=model_path, n_ctx=4096, n_gpu_layers=-1)
-    
-    def __call__(self):
-        return
-    
-
-def output_major_suggestion(profile, major):
-    prompt=f"""You are an expert career advisor. Your task is to generate a personalized explanation of why a suggested college major suits a specific user. 
-
-    Instructions:
-    1. Read the user's profile carefully. Highlight their hard and soft skills, interests, and preferences.
-    2. Read the description of the suggested major. Understand its technical requirements, soft skills needed, and potential career paths.
-    3. Write a clear, professional summary that explains why the major fits the user. 
-    4. Make explicit links between the user's strengths and aspects of the major.
-    5. Use details from both inputs but summarize in 4-6 sentences. Avoid repeating the full description of the major.
-
-    User Profile:
-    {profile}
-
-    Suggested Major:
-    {major}
-
-    Output: """
-
-    response=llm(prompt, max_tokens=2048, echo=False)
-    llm.close()
-    return response["choices"][0]['text']
-
-
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+sessions = {}
 app = Flask(__name__)
 CORS(app)  
 
@@ -56,12 +18,11 @@ def home():
 def generate():
     data = request.get_json()
     prompt = data.get("prompt", "")
-    prompt=initial_prompt + ' ' + prompt
+    prompt=profile_gen_prompt + ' ' + prompt
     output = llm(prompt, max_tokens=2048, stop=[]) 
     text = output["choices"][0]["text"]
 
     return jsonify({"response": text.strip()})
-
 
 
 @app.route('/receive_q_a', methods=['POST'])
@@ -103,9 +64,6 @@ def find_suitable_major():
     found_major=(prompt)
     return jsonify({"response" : found_major})
 
-sessions = {}
-context= {}
-
 
 @app.route("/start_cluster_quiz", methods=["POST"])
 def start_quiz():
@@ -124,15 +82,6 @@ def start_quiz():
     sessions[user_id]['current_qid']=qid
     
     return {"stage": "cluster", "question": q, "options": opts}
-
-
-def start_major_quiz(major_scores, cluster, state):
-    q, opt, mid, major=pick_major_question(major_scores, cluster)
-    
-    state['mid']=mid
-    state['current_major']=major
-    
-    return state, q, opt
 
 
 @app.route("/answer", methods=["POST"])
@@ -194,28 +143,22 @@ def answer():
 
 
 @app.route('/suggest_major', methods=['POST'])
-def fu():
+def suggest_m():
     user_profile=request.json['profile']
     user_major_description=request.json['major']
     
-    model_suggestion=output_major_suggestion(user_profile, user_major_description)
+    model_suggestion=output_major_suggestion(llm, user_profile, user_major_description)
     
     return {'text':model_suggestion}
 
 
-def run_chatbot(prof, ad_res, q_a, query):
-    system_prompt=f'You are a helpful assistant, that has access to user profile, quiz questions and answers. Use them only when neccessary to answer a particular query. Profile:{prof}. Questions and Answers:{q_a}. {query}'
-    return llm(system_prompt, max_tokens=4096)['choices'][0]["text"]
-
-
 @app.route('/chat', methods=['POST'])
-def ch():
-    user_id, query, prof, ad_res, qui=request.json['session_id'], request.json['query'], request.json['profile'], request.json['quiz_adap_res'], request.json['quiz']
+def run_model():
+    _, query=request.json['session_id'], request.json['query']
 
-    r=run_chatbot(prof, ad_res, q_a, query)
+    r=run_chatbot(query)
 
     return {'ai_m':r}
-
 
 
 if __name__ == "__main__":

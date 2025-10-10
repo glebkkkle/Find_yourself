@@ -107,11 +107,13 @@ SUGGESTIONS = {
 }
 if "answers" in st.session_state:
     sub_ans = st.session_state.answers
+else:sub_ans=None
 if "profile_result" in st.session_state:
     prof = st.session_state.profile_result
+else:prof=None
 if "result" in st.session_state and st.session_state.result:
-    adap_res = st.session_state.result
-
+    adap_res = st.session_state.result 
+else: adap_res=None
 user_avatar = Image.open(r"user_avatar.jpg")
 bot_avatar = Image.open(r"bot_avatar.jpg")
 
@@ -121,7 +123,7 @@ def avatarer():
     if message['role'] == 'user':
         return user_avatar
     
-API_URL_CHAT = "https://b19e33956c16.ngrok-free.app/chat"
+API_URL_CHAT = "https://e3f3759e9a98.ngrok-free.app/chat"
 title_row = st.container(
     horizontal=True,
     vertical_alignment="bottom",
@@ -203,7 +205,10 @@ with st.container():
 
             with st.chat_message('assistant', avatar=bot_avatar):
                 with st.spinner("Thinking..."):
-                    response = requests.post(API_URL_CHAT, json={'session_id':'1', 'query':user_message, "quiz_adap_res": adap_res, "profile": prof, "quiz": sub_ans })
+                    if adap_res is not None or prof is not None or sub_ans is not None:
+                        response = requests.post(API_URL_CHAT, json={'session_id':'1', 'query':user_message, "quiz_adap_res": adap_res , "profile": prof, "quiz": sub_ans })
+                    else:
+                        response = requests.post(API_URL_CHAT, json={'session_id':'1', 'query':user_message})
                     if response.status_code == 200:
                         ai = response.json()['ai_m']
                 with st.container():

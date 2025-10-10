@@ -1,7 +1,7 @@
 from ds import STEM_data_cluster, Business_cluster, STEM_engineering_cluster, Humanities_cluster
 import numpy as np 
 import requests
-
+from llama_cpp import Llama
 
 clusters={}
 
@@ -66,24 +66,6 @@ def update_cluster_weights(user_ans, cluster_id, cluster, cluster_scores, major_
     return cluster_scores
 
 
-def _get_user_answer(q, options):
-    print('----------------------------')
-    print(q)
-    print('----------------------------')
-    
-
-    for option in options:
-        print(option)
-    print(' ')
-
-    user_input=input('Select one Option:')
-    while user_input not in options:
-        user_input=input('Select one Option:')
-
-    return user_input
-
-
-
 def update_major_weights(cluster, major_id,user_ans,  major_name, major_scores):
     question=clusters[cluster]['majors'][major_name]['major_questions'][major_id]
     answer_weight=question['answer_weights'][user_ans]
@@ -95,97 +77,6 @@ def update_major_weights(cluster, major_id,user_ans,  major_name, major_scores):
 
 
 
-
-def _format_cluster(cluster_scores):
-    chosen_cluster=max(cluster_scores, key=lambda x : cluster_scores[x])    
-    return chosen_cluster
-
-get_user_response_url=''
-
-def run_cluster_quiz(cluster_scores):
-    threshold=0.80
-    while True:
-        if any([clusters_scores[x] >= threshold for x in clusters_scores]):
-            break
-        question, opt, id, cluster_q=pick_question(clusters_scores) 
-        try:
-            user_ans=_get_user_answer(question, opt)
-        except TypeError:
-            break
-        clusters_scores=softmax(update_cluster_weights(user_ans, id, cluster_q, clusters_scores))
-
-
-    cluster=_format_cluster(clusters_scores)
-
-
-    return cluster
-
-quiz_states={'quiz_state':'abc123', 'cluster_scores':[], 'major_scores':[], 'done':False}
-
-def run_cl_quiz(session_id):
-    if quiz_states['done']==True:
-        return 'Over'
-
-    threshold=0.8
-    cluster_scores=quiz_states[session_id]
-
-    if any([cluster_scores[x] >=threshold for x in cluster_scores]):
-        quiz_states['done']=True
-        return max(cluster_scores, key=lambda x : cluster_scores[x])
-    
-    question, opt, id, cluster_q=pick_question(cluster_scores)
-    payload={'q':question, 'o':opt}
-
-    response=requests.post(get_user_response_url, json=payload)
-
-    return 
-
-
-def run_major_quiz(cluster):
-    major_scores={'STEM_data': {'Data Science':0, 'Artificial Intelligence':0, 'Accounting':0, 'Data Analytics':0 }, 
-                'Business':{"Business Administration":0, 'Economics':0,  'Finance':0, 'Management':0 },
-                'Humanities':{'History':0, 'Philosophy':0, 'Linguistics':0,'International Relations':0 },
-                'STEM_engineering':{'Mechanical Engineering':0,'Electrical Engineering':0, 'Civil Engineering':0, 'Biomedical Engineering':0 }}
-    majors=major_scores[cluster]
-    threhold=0.8
-
-    while True:
-        if any([majors[x] >=threhold for x in majors]):
-            break
-        question, options, major_id, major_name=pick_major_question(majors, cluster)
-        
-        try:
-            user_ans=_get_user_answer(question, options)
-        except TypeError:
-            break
-        majors=softmax(update_major_weights(cluster, major_id, user_ans, major_name, majors))
-
-    return max(majors, key=lambda x : majors[x])
-
-
-def run_quiz(cluster_scores, major_scores):
-    chosen_cluster=run_cluster_quiz(cluster_scores)
-
-    print('-------------------------------')
-    print('-------------------------------')
-    
-    major=run_major_quiz(chosen_cluster)
-
-    return major
-
-dic={'user_id':'abc123'}
-
-
-
-def _identify_session(payload, states):
-    session_id=payload['user_id']
-
-    cluster_scores=states['cluster_scores']
-    major_scores=states['major_scores']
-
-
-    return 
-
 def init_major_scores(cluster):
     major_scores = {
         'STEM_data': {'Data Science': 0, 'Artificial Intelligence': 0, 'Accounting': 0, 'Data Analytics': 0},
@@ -195,22 +86,34 @@ def init_major_scores(cluster):
     }
     return major_scores[cluster].copy() 
 
+model_path="/mnt/c/Users/klyme/Downloads/gemma-3-finetune.Q8_0.gguf"
+profile_gen_prompt="You are given a set of quiz answers from a person. Based on these answers, generate a coherent profile of the person that follows the structure: (1) Your Hard Skills – summarize technical strengths with explicit reference to supporting question numbers, (2) Your Soft Skills – summarize interpersonal/emotional/adaptive strengths with explicit reference to supporting question numbers, (3) Your Overall Profile – provide a friendly yet formal summary combining hard and soft skills, highlighting tendencies and weaker inclinations with reference to answers, (4) Possible Career-Study Directions – suggest broad pathways (not narrow job titles) aligned to the student’s strengths, linked to answers where possible. The tone must be friendly and formal, and all sections must clearly explain how the answers informed the conclusions.The person's answers: "
+
+llm=Llama(model_path=model_path, n_ctx=4096, n_gpu_layers=-1)
 
 
-user_sessions = {
-    'user_id':
-    "user123",
-    "cluster_quiz": {
-            "scores": {...},
-            "current_question": None,
-            "finished": False
-        },
-        "major_quiz": {
-            "scores": {...},
-            "current_question": None,
-            "finished": False
-        }
-    }
+def run_chatbot(query):
+    return llm(query, max_tokens=4096)['choices'][0]["text"]
 
 
+def output_major_suggestion(llm, profile, major):
+    prompt=f"""You are an expert career advisor. Your task is to generate a personalized explanation of why a suggested college major suits a specific user. 
 
+    Instructions:
+    1. Read the user's profile carefully. Highlight their hard and soft skills, interests, and preferences.
+    2. Read the description of the suggested major. Understand its technical requirements, soft skills needed, and potential career paths.
+    3. Write a clear, professional summary that explains why the major fits the user. 
+    4. Make explicit links between the user's strengths and aspects of the major.
+    5. Use details from both inputs but summarize in 4-6 sentences. Avoid repeating the full description of the major.
+
+    User Profile:
+    {profile}
+
+    Suggested Major:
+    {major}
+
+    Output: """
+
+    response=llm(prompt, max_tokens=2048, echo=False)
+    llm.close()
+    return response["choices"][0]['text']

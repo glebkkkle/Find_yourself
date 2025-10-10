@@ -16,7 +16,7 @@ st.set_page_config(
     page_icon=im,
     layout="centered"
 )
-API_URL ="https://b19e33956c16.ngrok-free.app"
+API_URL ="https://e3f3759e9a98.ngrok-free.app"
 # ---------------------- STYLES ----------------------
 
 st.markdown(

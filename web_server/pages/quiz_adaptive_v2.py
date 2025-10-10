@@ -3,7 +3,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from pages.auth1  import save_quiz_result1, login_user
+from web_server.pages.auth1 import save_quiz_result1, login_user
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -16,6 +16,9 @@ st.set_page_config(
     layout="centered"
 )
 API_URL = "https://e3f3759e9a98.ngrok-free.app"
+
+from src.quiz_majors import RunPremiumQuizMain, MainLLM
+
 # ---------------------- SESSION STATE ----------------------
 if "answers1" not in st.session_state:
     st.session_state.answers1 = None
@@ -27,6 +30,8 @@ if "result" not in st.session_state:
     st.session_state.result = None
 if "options" not in st.session_state:
     st.session_state.options = {}
+if "llm_instance" not in st.session_state:
+    st.session_state.llm_instance = MainLLM()
 
 login_result = login_user()
 if "error" not in login_result:
@@ -74,54 +79,61 @@ def fetch_next_question():
 
     else:
         st.error("Error!")
- 
-def answer_sub():
-    payload = {"answer": st.session_state.answers1, "user_id": 'uid'}
 
-    response = requests.post(f"{API_URL}/answer",json=payload)
-    if not response.json()['stage'] == 'done':
+def answer_sub(answer, quiz_instance):
 
-        return response.json()['question'], response.json()['options']
-    else:
-        if "profile_result" in st.session_state:
-                prof=st.session_state["profile_result"]
-        else:
-            prof='Good person'
-        st.session_state.done = True
+    st.session_state.answer1 = answer
 
-        print(prof)
+    result = quiz_instance.answer(answer)
+    if result is None:
+        st.session_state.done = quiz_instance.done
+        return None, None, None
 
-        return response.json()['result'], prof
+    stage, new_q, new_o = result
+    st.session_state.done = quiz_instance.done
+
+    return stage, new_q, new_o
+
 if "initialized" not in st.session_state:
-    fetch_next_question()   # fetch first question only once
+    st.session_state.quiz_instance_new1 = RunPremiumQuizMain('new1')
+
+    quiz=st.session_state.quiz_instance_new1
+
+    cl,q,op=quiz.init_quiz('new1')
+
+    st.session_state.current_question1 =q
+    st.session_state.options=op
+
     st.session_state.initialized = True
 
 
-
-
 with adap_prof:
+    quiz1 = st.session_state.quiz_instance_new1
+
     if not st.session_state.done:
         q = st.session_state.current_question1
         opts = st.session_state.options
 
         if q:
-            answer = st.radio(f"**{q}**", opts)
+            selected = st.radio(f"**{q}**", opts)
             if st.button("Answer"):
-                st.session_state.answers1= answer
-                new_q, new_o=answer_sub()
-                
-                st.session_state.current_question1 = new_q
-                st.session_state.options = new_o
-                st.rerun()
-    else:
-        res, prof= answer_sub()
-        
-        
-        resp=requests.post(f"{API_URL}/suggest_major", json={'profile':prof, 'major':res})
+                stage, new_q, new_o = answer_sub(selected, quiz1)
 
-        r=(resp.json()['text'])
-        st.session_state.result = r
+                if stage == 'done':
+                    st.session_state.done = True
+                    st.session_state.final_major = new_q  
+                    st.rerun()
+                else:
+
+                    st.session_state.current_question1 = new_q
+                    st.session_state.options = new_o
+                    st.rerun()
+    else:
+        final_major = st.session_state.get('final_major', None)
+        res=st.session_state.llm_instance.generate_major_suggestion(st.session_state.profile_result, final_major)
+        st.session_state.result = res
         st.switch_page(r"pages/profile_prototype.py")
+
 
 st.markdown(
     """

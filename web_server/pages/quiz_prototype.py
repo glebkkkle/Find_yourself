@@ -5,6 +5,16 @@ from PIL import Image
 import requests
 # from web_server.auth  import save_quiz_result
 import json
+from src.quiz_majors import MainLLM
+
+
+@st.cache_resource
+def load_llm():
+    print("Loading model only once...")
+    return MainLLM()
+
+llm=load_llm()
+
 # ---------------------- PAGE CONFIG ----------------------
 try:
     im = Image.open(rf"Find_yourself\web_server\logo-round.png")
@@ -18,6 +28,10 @@ st.set_page_config(
 )
 API_URL ="https://e3f3759e9a98.ngrok-free.app"
 # ---------------------- STYLES ----------------------
+if "llm_instance" not in st.session_state:
+    st.session_state.llm_instance = llm
+
+
 
 st.markdown(
     """
@@ -99,8 +113,6 @@ if "current_question" not in st.session_state:
 if "answers" not in st.session_state:
     st.session_state.answers = {q["question"]: None for q in quiz}
 
-def transform_response(response):
-    return f""""{str(response)}"""
 
 q_index = st.session_state.current_question
 last_index = len(quiz) - 1
@@ -150,30 +162,18 @@ def do_submit():
     st.session_state.answers[question["question"]] = st.session_state[radio_key]
     submitted_answers = st.session_state.answers.copy()    # copies the answers to work with (dict. format)
     # save_quiz_result(st.session_state["user"]["localId"], st.session_state.answers)
-    pailor = {"prompt":f"{submitted_answers}"}
-    response = requests.post(
-        f"{API_URL}/check_data",
-        json=pailor
-    )
-    if response.status_code == 200:
-        q_a=response.json()['response']  
-    else:
-        print('Error')
-    q_a=transform_response(q_a)
+    rep=st.session_state.llm_instance.generate_user_profile(submitted_answers)
+    print(rep)
 
-    payload={"prompt":f'{q_a}'}
-    profile=requests.post(f"{API_URL}/generate", json=payload)
 
-    if profile.status_code == 200:
-        result = profile.json()['response']
-        result=clean_text(result)
-        st.session_state["profile_result"] = split_sections(result)
-        st.session_state["go_to_profile"] = True
-        print(type(result))
-        print(result)
-        print(st.session_state["profile_result"])
-    else:
-        placeholder.error("Error")
+    result=clean_text(rep)
+    st.session_state["profile_result"] = split_sections(result)
+    st.session_state["go_to_profile"] = True
+    print(type(result))
+    print(result)
+    print(st.session_state["profile_result"])
+
+
 # ---------------------- PAGE CONTENT ----------------------
 st.markdown(
     """

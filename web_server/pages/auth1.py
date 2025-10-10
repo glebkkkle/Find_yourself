@@ -6,7 +6,7 @@ import requests
 
 #-------------------- MAIN ------------------------
 if not firebase_admin._apps:
-    cred = credentials.Certificate(r"not_a_key.json")
+    cred = credentials.Certificate(r"web_server/not_a_key.json")
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

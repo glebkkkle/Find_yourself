@@ -1,6 +1,6 @@
 from llama_cpp import Llama
 from quiz_majors import llm, run_chatbot, profile_gen_prompt,pick_major_question, pick_question, update_major_weights, update_cluster_weights, softmax, init_major_scores, output_major_suggestion
-from agent_chat import instance
+
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -30,14 +30,12 @@ def q_a():
     data=request.get_json()
     question=data.get('q', '')
     answers=data.get('o', [])
-
     
     return jsonify({'question':question, 'answers':answers})
 
 
 @app.route("/major_quiz", methods=['POST'])
 def f():
-
     data=request.get_json()
     prompt=data.get('prompt', '')
 

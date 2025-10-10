@@ -1,7 +1,15 @@
 import streamlit as st
-import requests
 from PIL import Image
+from src.quiz_majors import MainLLM
+@st.cache_resource
+def load_llm():
+    print("Loading model only once...")
+    return MainLLM()
 
+llm=load_llm()
+
+if "llm_instance" not in st.session_state:
+    st.session_state.llm_instance = llm
 
 st.markdown("""
 <style>
@@ -114,8 +122,8 @@ else:prof=None
 if "result" in st.session_state and st.session_state.result:
     adap_res = st.session_state.result 
 else: adap_res=None
-user_avatar = Image.open(r"user_avatar.jpg")
-bot_avatar = Image.open(r"bot_avatar.jpg")
+user_avatar = Image.open(r"web_server/user_avatar.jpg")
+bot_avatar = Image.open(r"web_server/bot_avatar.jpg")
 
 def avatarer():
     if message['role'] == 'assistant':
@@ -205,13 +213,10 @@ with st.container():
 
             with st.chat_message('assistant', avatar=bot_avatar):
                 with st.spinner("Thinking..."):
-                    if adap_res is not None or prof is not None or sub_ans is not None:
-                        response = requests.post(API_URL_CHAT, json={'session_id':'1', 'query':user_message, "quiz_adap_res": adap_res , "profile": prof, "quiz": sub_ans })
-                    else:
-                        response = requests.post(API_URL_CHAT, json={'session_id':'1', 'query':user_message})
-                    if response.status_code == 200:
-                        ai = response.json()['ai_m']
+                    
+                    response=llm.run_chatbot(user_message)
+
                 with st.container():
-                    ai_message = st.write(ai)
-                    st.session_state.messages.append({"role": "assistant", "content": ai})
+                    ai_message = st.write(response)
+                    st.session_state.messages.append({"role": "assistant", "content": response})
             st.rerun()

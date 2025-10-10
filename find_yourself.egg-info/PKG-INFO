@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: find_yourself
+Version: 0.1
+License-File: LICENSE
+Requires-Dist: streamlit
+Requires-Dist: llama-cpp-python
+Requires-Dist: Pillow
+Requires-Dist: requests
+Dynamic: license-file
+Dynamic: requires-dist

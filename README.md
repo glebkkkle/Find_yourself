@@ -1,9 +1,3 @@
-# Find_yourself
-
-🎓 FindYourself — AI-Driven Major Recommendation Website
-
-"Helping students discover their ideal university major through adaptive AI quizzes and personalized insights."
-
 🌐 Overview
 
 FindYourself is an AI-powered web application that guides students toward discovering their best-fit university major.

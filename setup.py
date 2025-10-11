@@ -9,7 +9,6 @@ setup(
         "llama-cpp-python",
         "Pillow",
         "requests",
-        
-        # add other dependencies here
+ 
     ],
 )

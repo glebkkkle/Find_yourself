@@ -84,9 +84,6 @@ def init_major_scores(cluster):
     return major_scores[cluster].copy() 
 
 
-# llm=Llama(model_path=model_path, n_ctx=4096, n_gpu_layers=-1)
-
-
 class MainLLM:
     def __init__(self, model_path=model_path):
         self.llm=Llama(model_path, n_ctx=4096, n_gpu_layers=-1)
